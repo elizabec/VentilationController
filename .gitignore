@@ -1,1 +1,8 @@
 __pycache__
+MyModbus.pyc
+MyMQTT.pyc  
+MySerial.pyc 
+read_i2c.pyc 
+log.html
+output.xml
+report.html
