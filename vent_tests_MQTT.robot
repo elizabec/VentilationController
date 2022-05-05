@@ -2,7 +2,8 @@
 
 Resource    keywords_MQTT.robot
 
-Suite Setup    Run Keyword    MQTT Begin
+Suite Setup       Run Keyword    MQTT Begin
+Suite Teardown    Run Keyword    MQTT End
 
 *** Test Cases ***
 
