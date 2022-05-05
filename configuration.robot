@@ -46,37 +46,52 @@ Get I2C Pressure
     ${i2c_pressure}=    Run Keyword    Read I2C Data
     [Return]    ${i2c_pressure}
 
-Write MODBUS Bits    [Arguments]    ${REGISTER}    ${MODE}
-    ${VENT}=    Run Keyword    Setup
+Write MODBUS Bits    [Arguments]    ${VENT}    ${REGISTER}    ${MODE}
     Run Keyword    Write Modbits    ${VENT}    ${REGISTER}    ${MODE}
 
-Read MODBUS Bits    [Arguments]    ${REGISTER}    ${FUNCTION}
-    ${VENT}=    Run Keyword    Setup
+Read MODBUS Bits    [Arguments]    ${VENT}    ${REGISTER}    ${FUNCTION}
     ${output}=    Run Keyword    Read Modbits     ${VENT}    ${REGISTER}    ${FUNCTION}
     Log    ${output}
 
-Read Fan Volts    [Arguments]    ${DECIMALS}    ${FUNCTION}
-    ${VENT}=    Run Keyword    Setup
+Read Fan Volts    [Arguments]    ${VENT}    ${DECIMALS}    ${FUNCTION}
     ${output}=    Run Keyword    Get Fan Volt    ${VENT}    ${DECIMALS}    ${FUNCTION}
     Log    ${output}
     [Return]    ${output}
 
-Query Fan Status    [Arguments]    ${DECIMALS}    ${FUNCTION}
-    ${VENT}=    Run Keyword    Setup
+Query Fan Status    [Arguments]    ${VENT}   ${DECIMALS}    ${FUNCTION}
     ${output}=    Run Keyword   Query Fan    ${VENT}    ${DECIMALS}    ${FUNCTION}
     [Return]    ${output}
 
-Open KSOM Vent
-    ${VENT}=    Run Keyword    Setup
-    FOR    ${i}    IN RANGE    3
-        Run Keyword    Write Modbits    ${VENT}    ${POWER}    ${ON}
-        Sleep    1.5s
-        Run Keyword    Write Modbits    ${VENT}    ${POWER}    ${OFF}
-        Sleep    0.5s
-    END
+Open KSOM Vent    [Arguments]    ${VENT}
+    Run Keyword    Write Modbits    ${VENT}    ${BOOST}    ${ON}
+    Sleep    10s
 
-Close KSOM Vent
-    ${VENT}=    Run Keyword    Setup
-    Run Keyword    Write Modbits    ${VENT}    ${POWER}    ${ON}
-    Sleep    8s
+Close KSOM Vent    [Arguments]    ${VENT}
+    Run Keyword    Write Modbits    ${VENT}    ${BOOST}    ${OFF}
+    Sleep    13s
     Run Keyword    Write Modbits    ${VENT}    ${POWER}    ${OFF}
+    Sleep    0.5s
+    Run Keyword    Write Modbits    ${VENT}    ${DIP_1}    ${OFF}
+    Run Keyword    Write Modbits    ${VENT}    ${DIP_2}    ${OFF}
+
+Set KSOM Dip Switches    [Arguments]    ${VENT}    ${DIPS}
+    IF    "${DIPS}" == "NODIP"
+        Run Keyword    Write Modbits    ${VENT}    ${POWER}    ${ON}
+        Sleep    30s
+    ELSE IF    "${DIPS}" == "DIP1" 
+        Run Keyword    Write Modbits    ${VENT}    ${DIP_1}    ${ON}
+        Sleep    0.5s
+        Run Keyword    Write Modbits    ${VENT}    ${POWER}    ${ON}
+        Sleep    30s
+    ELSE IF    "${DIPS}" == "DIP2"
+        Run Keyword    Write Modbits    ${VENT}    ${DIP_2}    ${ON}
+        Sleep    0.5s
+        Run Keyword    Write Modbits    ${VENT}    ${POWER}    ${ON}
+        Sleep    30s
+    ELSE IF    "${DIPS}" == "BOTHDIP"
+        Run Keyword    Write Modbits    ${VENT}    ${DIP_1}    ${ON}
+        Run Keyword    Write Modbits    ${VENT}    ${DIP_2}    ${ON}
+        Sleep    0.5s
+        Run Keyword    Write Modbits    ${VENT}    ${POWER}    ${ON}
+        Sleep    30s
+    END

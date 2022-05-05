@@ -37,20 +37,20 @@ Get Serial Error    [Arguments]    ${payload}
     Log    ${error_flag}
     [Return]    ${error_flag}
 
-Serial Get Speed Values    [Arguments]    ${PORT} 
+Serial Get Speed Values    [Arguments]    ${VENT}    ${PORT} 
     ${PAYLOAD}=    Read Serial Message    ${PORT}
     ${SERIAL_SPEED}=    Get Serial Fan Speed    ${PAYLOAD}
-    ${FAN_VOLT}=    Read Fan Volts    ${NO_DEC}    ${FUNC_4}
+    ${FAN_VOLT}=    Read Fan Volts    ${VENT}    ${NO_DEC}    ${FUNC_4}
 
 Serial Get Pressure Values    [Arguments]    ${PORT}
     ${PAYLOAD}=    Read Serial Message    ${PORT}
     ${SERIAL_PRESSURE}=    Get Serial Air Pressure    ${PAYLOAD}
     ${I2C_PRESSURE}=    Get I2C Pressure
 
-Serial Compare Speed Values    [Arguments]    ${PORT}
+Serial Compare Speed Values    [Arguments]    ${VENT}    ${PORT}
     ${PAYLOAD}=    Read Serial Message    ${PORT}
     ${SERIAL_SPEED}=    Get Serial Fan Speed    ${PAYLOAD}
-    ${FAN_VOLT}=    Read Fan Volts    ${NO_DEC}    ${FUNC_4}
+    ${FAN_VOLT}=    Read Fan Volts    ${VENT}    ${NO_DEC}    ${FUNC_4}
     ${DIFF}=     Evaluate    ${SERIAL_SPEED} - ${FAN_VOLT}
     ${ABS_DIFF}=    Evaluate    abs(${DIFF})
     Should be True    ${ABS_DIFF} < 2 
@@ -63,16 +63,16 @@ Serial Compare Pressure Values    [Arguments]    ${PORT}
     ${ABS_DIFF}=    Evaluate    abs(${DIFF})
     Should be True    ${ABS_DIFF} < 3 
 
-Serial Open Vent and Compare Speed    [Arguments]    ${PORT}
-    Open KSOM Vent
+Serial Open Vent and Compare Speed    [Arguments]    ${VENT}    ${PORT}
+    Open KSOM Vent    ${VENT}
     Sleep    10s
-    Serial Compare Speed Values    ${PORT}
+    Serial Compare Speed Values    ${VENT}    ${PORT}
     Serial Get Pressure Values    ${PORT}
 
-Serial Open Vent and Compare Pressure    [Arguments]    ${PORT}
-    Open KSOM Vent
+Serial Open Vent and Compare Pressure    [Arguments]    ${VENT}    ${PORT}
+    Open KSOM Vent    ${VENT}
     Sleep    20s
     Serial Get Speed Values    ${PORT}
-    Serial Compare Pressure Values    ${PORT}
+    Serial Compare Pressure Values    ${VENT}    ${PORT}
 
 

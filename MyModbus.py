@@ -50,12 +50,10 @@ def read_modbits(ins, reg, mode):
 
 if __name__ == '__main__':
     vent = setup()
-    write_modbits(vent, 0, 1)
-    write_modbits(vent, 1, 1)
-    write_modbits(vent, 2, 1)
-    time.sleep(1.5)
     write_modbits(vent, 2, 0)
+    time.sleep(0.5)
     write_modbits(vent, 0, 0)
     write_modbits(vent, 1, 0)
-    query_fan(vent, 0, 4)
+    write_modbits(vent, 3, 0)
+    
     

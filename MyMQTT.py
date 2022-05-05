@@ -12,8 +12,7 @@ class MyMQTT:
         self.client.subscribe(self.sub_topic)
 
     def on_message(self, client, userdata, message):
-        global rec_message
-        rec_message = json.loads(message.payload)
+        self.rec_message = json.loads(message.payload)
 
     def on_publish(self, client, userdata, m_id):
         print("Message sent")
@@ -32,12 +31,12 @@ class MyMQTT:
         self.client.connect(self.broker)
         self.client.loop_start()
 
-    def mqtt_end(self):
-        self.client.loop_stop()
+    def mqtt_end(self): 
         self.client.disconnect()
+        self.client.loop_stop()
 
     def get_message(self):
-        m = rec_message
+        m = self.rec_message
         return m
     
     def send_message(self, msg_str):
@@ -54,21 +53,17 @@ class MyMQTT:
         fan_speed = mqtt_payload['speed']
         return fan_speed
 
-
     def read_pressure(self, mqtt_payload):
         pressure = mqtt_payload['pressure']
         return pressure
-
 
     def read_setpoint(self, mqtt_payload):
         setpoint = mqtt_payload['setpoint']
         return setpoint
 
-
     def read_mode(self, mqtt_payload):
         mode = mqtt_payload['auto'] 
         return mode
-
 
     def read_error(self, mqtt_payload):
         error_flag = mqtt_payload['error']
