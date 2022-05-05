@@ -14,6 +14,10 @@ ADD VentilationController/read_i2c.py /usr/src/ventcontroller/
 
 ADD VentilationController/configuration.robot /usr/src/ventcontroller/
 
-ADD VentilationController/vent_tests.robot /usr/src/ventcontroller/
+ADD VentilationController/keywords_MQTT.robot /usr/src/ventcontroller
 
-CMD ["robot", "/usr/src/ventcontroller/vent_tests.robot"]
+ADD VentilationController/keywords_serial.robot /usr/src/ventcontroller
+
+ADD VentilationController/vent_tests_MQTT.robot /usr/src/ventcontroller/
+
+ADD VentilationController/vent_tests_USB.robot /usr/src/ventcontroller/
