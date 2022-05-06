@@ -3,17 +3,13 @@
 Resource    keywords_serial.robot
 
 *** Test Cases ***
-
-Read Message From USB
-    [Tags]    serial    read
-    ${serial_msg}=    Run Keyword    Read Serial Message    ${RPI_LPC_PORT}
-    Log    ${serial_msg}
     
 Manual Test Speed 50 
     [Tags]    manual    serial
     Send Serial Command    ${speed_50}    ${RPI_LPC_PORT}
     Sleep    10s
-    Serial Compare Speed Values    ${RPI_LPC_PORT} 
+    ${VENT}=    Run Keyword    Setup
+    Serial Compare Speed Values    ${VENT}    ${RPI_LPC_PORT} 
 
 Manual Test Vent Control No Dip Switches
     [Tags]    manual    serial    ventcontrol    nodips
@@ -32,7 +28,7 @@ Manual Test Vent Control Dip Switch 1
     Sleep    10s
     ${VENT}=    Run Keyword    Setup
     Set KSOM Dip Switches    ${VENT}    DIP1
-    Serial Open Vent and Compare Speed    ${RPI_LPC_PORT}
+    Serial Open Vent and Compare Speed    ${VENT}    ${RPI_LPC_PORT}
     Close KSOM Vent    ${VENT}
     Serial Compare Speed Values    ${VENT}    ${RPI_LPC_PORT}
     Serial Get Pressure Values    ${RPI_LPC_PORT}
@@ -63,8 +59,8 @@ Manual Test Low Speed
     [Tags]    manual    serial    lowspeed    errorcheck
     Send Serial Command    ${speed_5}    ${RPI_LPC_PORT}
     Sleep    20s
-    Serial Get Speed Values    ${RPI_LPC_PORT}
     ${VENT}=    Run Keyword    Setup
+    Serial Get Speed Values    ${VENT}    ${RPI_LPC_PORT}
     ${FAN_STATUS}=    Query Fan Status    ${VENT}    ${NO_DEC}    ${FUNC_4}
     Should be Equal as Strings    ${FAN_STATUS}    OFF
     Sleep    45s
@@ -74,8 +70,7 @@ Manual Test Low Speed
 
     Send Serial Command    ${speed_10}    ${RPI_LPC_PORT}
     Sleep    10s
-    Serial Get Speed Values    ${RPI_LPC_PORT}
-    ${VENT}=    Run Keyword    Setup
+    Serial Get Speed Values    ${VENT}    ${RPI_LPC_PORT}
     ${FAN_STATUS}=    Query Fan Status    ${VENT}    ${NO_DEC}    ${FUNC_4}
     Should be Equal as Strings    ${FAN_STATUS}    ON
     Sleep    10s
@@ -83,6 +78,10 @@ Manual Test Low Speed
     ${error_flag}=     Get Serial Error    ${PAYLOAD}
     Should be Equal as Strings    ${error_flag}    False
 
+Read Message From USB
+    [Tags]    serial    read
+    ${serial_msg}=    Run Keyword    Read Serial Message    ${RPI_LPC_PORT}
+    Log    ${serial_msg}
 
 Automatic Test Pressure 70
     [Tags]    automatic    serial    speed
@@ -98,8 +97,8 @@ Automatic Test Vent Control No Dip Switches
     Set KSOM Dip Switches    ${VENT}    NODIP
     Serial Open Vent and Compare Pressure    ${VENT}    ${RPI_LPC_PORT}
     Close KSOM Vent    ${VENT}
-    Serial Get Speed Values    ${RPI_LPC_PORT}
-    Serial Compare Pressure Values    ${VENT}    ${RPI_LPC_PORT} 
+    Serial Get Speed Values    ${VENT}    ${RPI_LPC_PORT}
+    Serial Compare Pressure Values    ${RPI_LPC_PORT} 
 
 Automatic Test Vent Control Dip Switch 1
     [Tags]    automatic    serial    ventcontrol    onedip
@@ -107,10 +106,10 @@ Automatic Test Vent Control Dip Switch 1
     Sleep    10s
     ${VENT}=    Run Keyword    Setup
     Set KSOM Dip Switches    ${VENT}    DIP1
-    Serial Open Vent and Compare Pressure    ${RPI_LPC_PORT}
+    Serial Open Vent and Compare Pressure    ${VENT}    ${RPI_LPC_PORT}
     Close KSOM Vent    ${VENT}
-    Serial Get Speed Values    ${RPI_LPC_PORT}
-    Serial Compare Pressure Values    ${VENT}    ${RPI_LPC_PORT}
+    Serial Get Speed Values    ${VENT}    ${RPI_LPC_PORT}
+    Serial Compare Pressure Values    ${RPI_LPC_PORT}
 
 Automatic Test Vent Control Dip Switch 2
     [Tags]    automatic    serial    ventcontrol    onedip
@@ -120,8 +119,8 @@ Automatic Test Vent Control Dip Switch 2
     Set KSOM Dip Switches    ${VENT}    DIP2
     Serial Open Vent and Compare Pressure    ${VENT}    ${RPI_LPC_PORT}
     Close KSOM Vent    ${VENT}
-    Serial Get Speed Values    ${RPI_LPC_PORT}
-    Serial Compare Pressure Values    ${VENT}    ${RPI_LPC_PORT}
+    Serial Get Speed Values    ${VENT}    ${RPI_LPC_PORT}
+    Serial Compare Pressure Values    ${RPI_LPC_PORT}
 
 Automatic Test Vent Control Both Dip Switches
     [Tags]    automatic    serial    ventcontrol    bothdip
@@ -131,5 +130,5 @@ Automatic Test Vent Control Both Dip Switches
     Set KSOM Dip Switches    ${VENT}    BOTHDIP
     Serial Open Vent and Compare Pressure    ${VENT}    ${RPI_LPC_PORT}
     Close KSOM Vent    ${VENT}
-    Serial Get Speed Values    ${RPI_LPC_PORT}
-    Serial Compare Pressure Values    ${VENT}    ${RPI_LPC_PORT}
+    Serial Get Speed Values    ${VENT}    ${RPI_LPC_PORT}
+    Serial Compare Pressure Values    ${RPI_LPC_PORT}

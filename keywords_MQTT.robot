@@ -47,23 +47,23 @@ Get MQTT Error    [Arguments]    ${payload}
     Log    ${error_flag}
     [Return]    ${error_flag}
 
-MQTT Get Speed Values
+MQTT Get Speed Values    [Arguments]    ${VENT}
     ${PAYLOAD}=    Get MQTT Payload
     ${MQTT_SPEED}=    Get MQTT Fan Speed    ${PAYLOAD}
-    ${FAN_VOLT}=    Read Fan Volts    ${NO_DEC}    ${FUNC_4}
+    ${FAN_VOLT}=    Read Fan Volts    ${VENT}    ${NO_DEC}    ${FUNC_4}
 
 MQTT Get Pressure Values
     ${PAYLOAD}=    Get MQTT Payload
     ${MQTT_PRESSURE}=    Get MQTT Air Pressure    ${PAYLOAD}
     ${I2C_PRESSURE}=    Get I2C Pressure
 
-MQTT Compare Speed Values
+MQTT Compare Speed Values    [Arguments]    ${VENT}
     ${PAYLOAD}=    Get MQTT Payload
     ${MQTT_SPEED}=    Get MQTT Fan Speed    ${PAYLOAD}
-    ${FAN_VOLT}=    Read Fan Volts    ${NO_DEC}    ${FUNC_4}
+    ${FAN_VOLT}=    Read Fan Volts    ${VENT}    ${NO_DEC}    ${FUNC_4}
     ${DIFF}=     Evaluate    ${MQTT_SPEED} - ${FAN_VOLT}
     ${ABS_DIFF}=    Evaluate    abs(${DIFF})
-    Should be True    ${ABS_DIFF} < 2 
+    Should be True    ${ABS_DIFF} <= 2 
 
 MQTT Compare Pressure Values
     ${PAYLOAD}=    Get MQTT Payload
@@ -71,18 +71,18 @@ MQTT Compare Pressure Values
     ${I2C_PRESSURE}=    Get I2C Pressure
     ${DIFF}=     Evaluate    ${MQTT_PRESSURE} - ${I2C_PRESSURE}
     ${ABS_DIFF}=    Evaluate    abs(${DIFF})
-    Should be True    ${ABS_DIFF} < 3 
+    Should be True    ${ABS_DIFF} <= 3 
 
-MQTT Open Vent and Compare Speed
-    Open KSOM Vent
+MQTT Open Vent and Compare Speed    [Arguments]    ${VENT}
+    Open KSOM Vent    ${VENT}
     Sleep    10s
-    MQTT Compare Speed Values
+    MQTT Compare Speed Values    ${VENT}
     MQTT Get Pressure Values
 
-MQTT Open Vent and Compare Pressure
-    Open KSOM Vent
+MQTT Open Vent and Compare Pressure    [Arguments]    ${VENT}
+    Open KSOM Vent    ${VENT}
     Sleep    20s
-    MQTT Get Speed Values
+    MQTT Get Speed Values    ${VENT}
     MQTT Compare Pressure Values
 
 

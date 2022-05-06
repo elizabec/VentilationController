@@ -53,7 +53,7 @@ Serial Compare Speed Values    [Arguments]    ${VENT}    ${PORT}
     ${FAN_VOLT}=    Read Fan Volts    ${VENT}    ${NO_DEC}    ${FUNC_4}
     ${DIFF}=     Evaluate    ${SERIAL_SPEED} - ${FAN_VOLT}
     ${ABS_DIFF}=    Evaluate    abs(${DIFF})
-    Should be True    ${ABS_DIFF} < 2 
+    Should be True    ${ABS_DIFF} <= 2 
 
 Serial Compare Pressure Values    [Arguments]    ${PORT}
     ${PAYLOAD}=    Read Serial Message    ${PORT}
@@ -61,7 +61,7 @@ Serial Compare Pressure Values    [Arguments]    ${PORT}
     ${I2C_PRESSURE}=    Get I2C Pressure
     ${DIFF}=     Evaluate    ${SERIAL_PRESSURE} - ${I2C_PRESSURE}
     ${ABS_DIFF}=    Evaluate    abs(${DIFF})
-    Should be True    ${ABS_DIFF} < 3 
+    Should be True    ${ABS_DIFF} <= 3 
 
 Serial Open Vent and Compare Speed    [Arguments]    ${VENT}    ${PORT}
     Open KSOM Vent    ${VENT}
@@ -72,7 +72,7 @@ Serial Open Vent and Compare Speed    [Arguments]    ${VENT}    ${PORT}
 Serial Open Vent and Compare Pressure    [Arguments]    ${VENT}    ${PORT}
     Open KSOM Vent    ${VENT}
     Sleep    20s
-    Serial Get Speed Values    ${PORT}
-    Serial Compare Pressure Values    ${VENT}    ${PORT}
+    Serial Get Speed Values    ${VENT}    ${PORT}
+    Serial Compare Pressure Values    ${PORT}
 
 
