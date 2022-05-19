@@ -26,6 +26,9 @@ class RobotGUI(tk.Tk):
         frame = self.frames[page_name]
         frame.tkraise()
 
+    def print_output(self, output):
+        pass
+
     def run_robot_read(self, control):
         if control == "USB":
             subprocess.run(["robot", "-i", "read", "vent_tests_USB.robot"])
@@ -47,14 +50,14 @@ class RobotGUI(tk.Tk):
     def run_robot_nodip(self, control, mode):
         if control == "USB":
             if mode == "auto":
-                subprocess.run(["robot", "-i", "nodip", "-e", "manual", "vent_tests_USB.robot"])
+                subprocess.run(["robot", "-i", "nodips", "-e", "manual", "vent_tests_USB.robot"])
             elif mode == "manual":
-                subprocess.run(["robot", "-i", "nodip", "-e", "automatic", "vent_tests_USB.robot"])
+                subprocess.run(["robot", "-i", "nodips", "-e", "automatic", "vent_tests_USB.robot"])
         elif control == "MQTT":
             if mode == "auto":
-                subprocess.run(["robot", "-i", "nodip", "-e", "manual", "vent_tests_MQTT.robot"])
+                subprocess.run(["robot", "-i", "nodips", "-e", "manual", "vent_tests_MQTT.robot"])
             elif mode == "manual":
-                subprocess.run(["robot", "-i", "nodip", "-e", "automatic", "vent_tests_MQTT.robot"])
+                subprocess.run(["robot", "-i", "nodips", "-e", "automatic", "vent_tests_MQTT.robot"])
 
     def run_robot_dip1(self, control, mode):
         if control == "USB":

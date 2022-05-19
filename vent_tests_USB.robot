@@ -82,6 +82,8 @@ Read Message From USB
     [Tags]    serial    read
     ${serial_msg}=    Run Keyword    Read Serial Message    ${RPI_LPC_PORT}
     Log    ${serial_msg}
+    Should Not Be Empty    ${serial_msg}
+    [Teardown]    Log to Console    ${TEST_STATUS}
 
 Automatic Test Pressure 70
     [Tags]    automatic    serial    pressure
