@@ -26,7 +26,7 @@ Manual Test Vent Control No Dip Switches
     MQTT Get Pressure Values   
 
 Manual Test Vent Control Dip Switch 1
-    [Tags]    manual    mqtt    ventcontrol    onedip
+    [Tags]    manual    mqtt    ventcontrol    dipone
     Publish MQTT Payload    ${speed_30}
     Sleep    10s
     ${VENT}=    Run Keyword    Setup
@@ -37,7 +37,7 @@ Manual Test Vent Control Dip Switch 1
     MQTT Get Pressure Values    
 
 Manual Test Vent Control Dip Switch 2
-    [Tags]    manual    mqtt    ventcontrol    onedip
+    [Tags]    manual    mqtt    ventcontrol    diptwo
     Publish MQTT Payload    ${speed_30}
     Sleep    10s
     ${VENT}=    Run Keyword    Setup

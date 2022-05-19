@@ -5,7 +5,7 @@ Resource    keywords_serial.robot
 *** Test Cases ***
     
 Manual Test Speed 50 
-    [Tags]    manual    serial
+    [Tags]    manual    serial    speed
     Send Serial Command    ${speed_50}    ${RPI_LPC_PORT}
     Sleep    10s
     ${VENT}=    Run Keyword    Setup
@@ -23,7 +23,7 @@ Manual Test Vent Control No Dip Switches
     Serial Get Pressure Values    ${RPI_LPC_PORT}
 
 Manual Test Vent Control Dip Switch 1
-    [Tags]    manual    serial    ventcontrol    onedip
+    [Tags]    manual    serial    ventcontrol    dipone
     Send Serial Command    ${speed_30}    ${RPI_LPC_PORT}
     Sleep    10s
     ${VENT}=    Run Keyword    Setup
@@ -34,7 +34,7 @@ Manual Test Vent Control Dip Switch 1
     Serial Get Pressure Values    ${RPI_LPC_PORT}
 
 Manual Test Vent Control Dip Switch 2
-    [Tags]    manual    serial    ventcontrol    onedip
+    [Tags]    manual    serial    ventcontrol    diptwo
     Send Serial Command    ${speed_30}    ${RPI_LPC_PORT}
     Sleep    10s
     ${VENT}=    Run Keyword    Setup
@@ -84,7 +84,7 @@ Read Message From USB
     Log    ${serial_msg}
 
 Automatic Test Pressure 70
-    [Tags]    automatic    serial    speed
+    [Tags]    automatic    serial    pressure
     Send Serial Command    ${pressure_70}    ${RPI_LPC_PORT}
     Sleep    20s
     Serial Compare Pressure Values    ${RPI_LPC_PORT}

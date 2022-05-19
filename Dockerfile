@@ -4,20 +4,9 @@ RUN python3 -m pip install robotframework && python3 -m pip install smbus && pyt
 
 RUN python3 -m pip install pyserial && python3 -m pip install minimalmodbus && python3 -m pip install numpy
 
-ADD VentilationController/MyMQTT.py /usr/src/ventcontroller/
+RUN apt-get -y update && apt-get -y install git
 
-ADD VentilationController/MyModbus.py /usr/src/ventcontroller/
+RUN git clone https://gitlab.metropolia.fi/elizabec/ventilation-controller-tests.git
 
-ADD VentilationController/MySerial.py /usr/src/ventcontroller/
+CMD ["cd", "ventilation-controller-tests", "|", "python3", "robot_gui.py"]
 
-ADD VentilationController/read_i2c.py /usr/src/ventcontroller/
-
-ADD VentilationController/configuration.robot /usr/src/ventcontroller/
-
-ADD VentilationController/keywords_MQTT.robot /usr/src/ventcontroller
-
-ADD VentilationController/keywords_serial.robot /usr/src/ventcontroller
-
-ADD VentilationController/vent_tests_MQTT.robot /usr/src/ventcontroller/
-
-ADD VentilationController/vent_tests_USB.robot /usr/src/ventcontroller/
