@@ -1,0 +1,6 @@
+robotframework
+smbus
+paho-mqtt
+minimalmodbus
+numpy
+pyserial
