@@ -276,4 +276,5 @@ class MQTTManSelect(tk.Frame):
 
 if __name__ == "__main__":
     app = RobotGUI()
+    #subprocess.run(["docker", "run", "-ti", "robot-docker-pi"])
     app.mainloop()
