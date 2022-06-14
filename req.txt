@@ -3,3 +3,4 @@ smbus
 paho-mqtt
 minimalmodbus
 pyserial
+numpy==1.14.2
